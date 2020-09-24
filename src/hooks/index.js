@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import { useState, useEffect } from "react";
 import moment from "moment";
 import { firebase } from "../firebase";
@@ -10,7 +11,7 @@ export const useTasks = (selectedProject) => {
   useEffect(() => {
     let unsubscribe = firebase
       .firestore()
-      .collection("task")
+      .collection("tasks")
       .where("userId", "==", "jSUkfdik");
 
     unsubscribe =
@@ -66,11 +67,11 @@ export const useProjects = () => {
           ...project.data(),
           docId: project.id,
         }));
-      });
 
-    if (JSON.stringify(allProjects) !== JSON.stringify(projects)) {
-      setProjects(allProjects);
-    }
+        if (JSON.stringify(allProjects) !== JSON.stringify(projects)) {
+          setProjects(allProjects);
+        }
+      });
   }, [projects]);
 
   return { projects, setProjects };
